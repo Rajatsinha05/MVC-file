@@ -1,8 +1,24 @@
 const { Router } = require("express");
-const { Student_add } = require("../controllers/student.controller");
+const {
+  Student_add,
+  StudentImage,
+} = require("../controllers/student.controller");
 const { check_data } = require("../middlewares/student.middleware");
-
+const multer = require("multer");
 let router = Router();
+
+let storage = multer.diskStorage({
+  destination: "images",
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({
+  storage: storage,
+}).single("image");
+
+router.post("/image", upload, StudentImage);
 
 router.get("/", (req, res) => {
   console.log(req.query.category);

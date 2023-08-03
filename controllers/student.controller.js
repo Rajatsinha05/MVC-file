@@ -10,4 +10,11 @@ const Student_add = async (req, res) => {
   }
 };
 
-module.exports = { Student_add };
+
+const StudentImage =  (req, res) => {
+  console.log(req.file);
+res.send("image added successfully");
+
+}
+
+module.exports = { Student_add, StudentImage };
