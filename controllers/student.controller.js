@@ -1,3 +1,4 @@
+const getdir = require("../components");
 const Student = require("../models/student.schema");
 
 const Student_add = async (req, res) => {
@@ -10,11 +11,18 @@ const Student_add = async (req, res) => {
   }
 };
 
+const StudentImage = async (req, res) => {
+  let path = getdir();
+  await Student.findByIdAndUpdate(req.params.id, {
+    image: path + "/" + req.file.path,
+  });
+  res.send("image added successfully");
+};
 
-const StudentImage =  (req, res) => {
-  console.log(req.file);
-res.send("image added successfully");
 
+const studentdata=async(req, res) => {
+let data=await Student.find()
+  res.send(data)
 }
 
-module.exports = { Student_add, StudentImage };
+module.exports = { Student_add, StudentImage,studentdata };

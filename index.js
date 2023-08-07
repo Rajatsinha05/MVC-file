@@ -10,6 +10,7 @@ app.set("views", __dirname + "/views");
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/student", router);
 
 app.listen(8090, () => {
