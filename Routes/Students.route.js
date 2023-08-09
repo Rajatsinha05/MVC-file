@@ -3,6 +3,7 @@ const {
   Student_add,
   StudentImage,
   studentdata,
+  getadmin,
 } = require("../controllers/student.controller");
 const { check_data } = require("../middlewares/student.middleware");
 const multer = require("multer");
@@ -18,21 +19,16 @@ let storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
-}).single("profile");
+}).array("profile");
 
-router.patch("/image/:id", upload, StudentImage);
+router.post("/image", upload, StudentImage);
 
-router.get("/", (req, res) => {
-  console.log(req.query.category);
-  res.send("Welcome to the Express server ");
-});
+router.get("/",getadmin)
 
 router.get("/upload", (req, res) => {
   res.render("imgupload")
 })
-router.get("/form", (req, res) => {
-  res.render("index");
-});
+
 router.get("/login", (req, res) => {
   res.render("login");
 });

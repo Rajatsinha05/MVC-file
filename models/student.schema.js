@@ -6,7 +6,7 @@ let studentSchema = new mongoose.Schema({
   course: String,
   grid: Number,
   city: String,
-  image: String,
+  images: []
 });
 
 const Student = mongoose.model("Student", studentSchema);
