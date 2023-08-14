@@ -7,4 +7,15 @@ const check_data = (req, res, next) => {
   }
 };
 
-module.exports = { check_data };
+const checkCookies = (req, res, next) => {
+  console.log(req.cookies);
+
+  if(req.cookies.user){
+
+    next();
+  }
+  else{
+    res.redirect("/student/signup");
+  }
+}
+module.exports = { check_data,checkCookies };
