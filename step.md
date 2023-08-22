@@ -1,16 +1,11 @@
 <!-- Terminal   -->
- npm i express-session
+
+npm i express-session
 npm install passport-local
 npm i passport
 
-
-
-
-
-
-
-
 <!-- middleware page -->
+
 make a middleware
 local require ('passport-local').Strategy
 
@@ -50,9 +45,8 @@ passport.deserializeUser(async(id,done)=>{
 
        export localAuthentication
 
-
-
 <!-- index.js page -->
+
 require express-session
 require passport
 
@@ -63,10 +57,8 @@ require passport
      app.use(passport.intialize())
      app.use(passport.session())
 
-
-
-
 <!-- Routes -->
+
 require passport
 
 routes.post('/login" passport.authentication("local"),(req,res)=>{

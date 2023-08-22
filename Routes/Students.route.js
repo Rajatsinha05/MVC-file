@@ -12,6 +12,7 @@ const {
 const multer = require("multer");
 const user = require("../models/studentsignup");
 const passport = require("passport");
+const isAuth = require("../middlewares/Auth");
 
 let router = Router();
 
@@ -87,7 +88,7 @@ router.post(
   }
 );
 
-router.get("/getstudent", (req, res) => {
+router.get("/getstudent", isAuth, (req, res) => {
   console.log(req.user);
   res.send(req.user);
 });
@@ -100,5 +101,9 @@ router.get("/logout", (req, res) => {
   });
   res.send("logout");
 });
+
+
+
+
 
 module.exports = router;
