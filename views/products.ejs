@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      #ui {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+      }
+      img {
+        width: 200px;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>product page</h1>
+
+    <form id="form">
+      <input type="text" id="title" />
+      <input type="url" id="img" />
+      <input type="number" id="price" />
+      <input type="submit" id="type" value="POST" />
+    </form>
+
+    <hr />
+    <div id="ui"></div>
+  </body>
+
+  <script>
+    let id = "";
+    const display = (data) => {
+      document.getElementById("ui").innerHTML = "";
+
+      data.map((ele) => {
+        let title = document.createElement("h3");
+        title.innerHTML = ele.title;
+        let img = document.createElement("img");
+        img.src = ele.img;
+        let price = document.createElement("p");
+        price.innerHTML = ele.price;
+        let btn = document.createElement("button");
+        btn.innerHTML = "Delete";
+        btn.addEventListener("click", () => {
+          fetch(`/product/destroy/${ele._id}`, {
+            method: "DELETE",
+          }).then(() => getdata());
+        });
+
+        let btn2 = document.createElement("button");
+        btn2.innerHTML = "Update";
+
+        btn2.addEventListener("click", () => {
+          document.getElementById("title").value = ele.title;
+          document.getElementById("img").value = ele.img;
+          document.getElementById("price").value = ele.price;
+          document.getElementById("type").value = "Update";
+          id = ele._id;
+        });
+
+        let div = document.createElement("div");
+        div.append(img, title, price, btn, btn2);
+
+        document.getElementById("ui").append(div);
+      });
+    };
+
+    const getdata = () => {
+      fetch("/product/get")
+        .then((response) => response.json())
+        .then((response) => display(response));
+    };
+    getdata();
+
+    document.getElementById("form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      let product = {
+        title: document.getElementById("title").value,
+        img: document.getElementById("img").value,
+        price: document.getElementById("price").value,
+      };
+
+      let type = document.getElementById("type").value;
+      if (type == "POST") {
+        addproduct(product);
+      } else {
+        updateproduct(product, id);
+      }
+    });
+
+    const addproduct = (data) => {
+      fetch("/product/add", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((response) => getdata());
+    };
+
+    const updateproduct = (data, id) => {
+      fetch(`/product/update/${id}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((response) => getdata());
+    };
+  </script>
+</html>
