@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+<div id="user"></div>
+
+
+    
+  </body>
+  <script>
+
+const displayBlogs=(blogs)=>{
+
+blogs.map((blog)=>{
+let img=document.createElement("img");
+img.src=blog.img
+let title=document.createElement("h2");
+title.innerHTML=blog.title
+let content=document.createElement("p")
+content.innerHTML=blog.content
+let div=document.createElement("div")
+div.append(img, title, content)
+document.getElementById("user").append(div)
+
+})
+
+
+}
+
+
+
+const display=(data)=>{
+let h1=document.createElement("h1");
+h1.innerHTML=data.username
+let button=document.createElement("button");
+button.innerHTML=`<a href="/student/logout">Logout</a>`
+
+document.getElementById("user").append(h1, button);
+displayBlogs(data.blogs);
+
+}
+
+    fetch("/student/userdetails")
+      .then((response) => response.json())
+      .then((response) =>display(response));
+
+
+
+  </script>
+</html>

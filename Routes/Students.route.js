@@ -102,8 +102,12 @@ router.get("/logout", (req, res) => {
   res.send("logout");
 });
 
+router.get("/user", isAuth, (req, res) => {
+  res.render("profile");
+});
 
-
-
+router.get("/userdetails", isAuth, (req, res) => {
+  res.send(req.user);
+});
 
 module.exports = router;
