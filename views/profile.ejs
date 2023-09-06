@@ -25,10 +25,7 @@ content.innerHTML=blog.content
 let div=document.createElement("div")
 div.append(img, title, content)
 document.getElementById("user").append(div)
-
 })
-
-
 }
 
 
@@ -46,9 +43,7 @@ displayBlogs(data.blogs);
 
     fetch("/student/userdetails")
       .then((response) => response.json())
-      .then((response) =>display(response));
-
-
+      .then((response) =>display(response))
 
   </script>
 </html>

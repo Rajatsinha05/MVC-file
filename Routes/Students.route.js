@@ -13,6 +13,7 @@ const multer = require("multer");
 const user = require("../models/studentsignup");
 const passport = require("passport");
 const isAuth = require("../middlewares/Auth");
+const transport = require("../config/email");
 
 let router = Router();
 
@@ -109,5 +110,39 @@ router.get("/user", isAuth, (req, res) => {
 router.get("/userdetails", isAuth, (req, res) => {
   res.send(req.user);
 });
+
+let otp=Math.floor(Math.random()*10000)
+
+
+router.get("/sendmail", (req, res) => {
+  const mailOptions = {
+    from: "nikunjnavapara1230@gmail.com",
+    to: "rw5.rajat.as@gmail.com",
+    subject: "node mailer testing",
+    html: `<a href="localhost:8090/student/verify/"${otp}> OTP ${otp}</a>`
+  };
+
+  transport.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(info);
+    }
+
+    res.send("testing mailer")
+  });
+});
+
+router.get("/verify/:otp", (req, res) => {
+if(otp==req.params.otp){
+  res.send("otp match")
+}
+else{
+  res.send("verify not match")
+}
+
+
+
+})
 
 module.exports = router;
