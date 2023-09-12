@@ -9,6 +9,7 @@ const localization = require("./middlewares/LocalAuth");
 const AuthGoogle = require("./middlewares/AuthGoogle");
 const productroute = require("./Routes/product.route");
 const password = require("./controllers/password");
+const blogRoute = require("./Routes/Blog.route");
 
 const app = express();
 app.use(cookiesparser());
@@ -26,6 +27,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/student", router);
 app.use("/product",productroute)
+app.use("/blog",blogRoute)
+
+
+
+
+
+
+
+
+
 app.use(password)
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile',"email"] }));
